@@ -5,7 +5,6 @@ import java.io.File;
 /**
  * 
  * @Description
- * @author conghui1
  * @version Created: 2015年6月18日16:50:27
  */
 public class UnlimitedUnCleanableDiskFileCache extends UnlimitedDiskFileCache {

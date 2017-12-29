@@ -22,11 +22,11 @@ import android.os.Looper;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.VolleyError;
+import com.corelib.volley.Request;
+import com.corelib.volley.RequestQueue;
+import com.corelib.volley.Response.ErrorListener;
+import com.corelib.volley.Response.Listener;
+import com.corelib.volley.VolleyError;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -35,14 +35,14 @@ import java.util.Map;
 /**
  * Helper that handles loading and caching images from remote URLs.
  *
- * The simple way to use this class is to call {@link ImageLoader#get(String, ImageListener)} and to
+ * The simple way to use this class is to call {@link ImageLoader#get(String, ImageListener, String, String)} )} and to
  * pass in the default image listener provided by
  * {@link ImageLoader#getImageListener(ImageView, int, int)}. Note that all function calls to
  * this class must be made from the main thead, and all responses will be delivered to the main
  * thread as well.
  */
 public class ImageLoader {
-    private final String IMAGE_NEWS_ID = "newsid";
+    private final String IMAGE_NEWS_ID = "id";
     private final String IMAGE_FROM = "from";
     /** RequestQueue for dispatching ImageRequests onto. */
     private final RequestQueue mRequestQueue;
@@ -83,7 +83,6 @@ public class ImageLoader {
      * Constructs a new ImageLoader.
      *
      * @param queue The RequestQueue to use for making image requests.
-     * @param imageCache The cache to use as an L1 cache.
      */
     public ImageLoader(RequestQueue queue) {
         mRequestQueue = queue;
@@ -95,7 +94,7 @@ public class ImageLoader {
      * of showing a default image until the network response is received, at which point
      * it will switch to either the actual image or the error image.
      *
-     * @param imageView The imageView that the listener is associated with.
+     * @param view The imageView that the listener is associated with.
      * @param defaultImageResId Default image resource ID to use, or 0 if it doesn't exist.
      * @param errorImageResId Error image resource ID to use, or 0 if it doesn't exist.
      */

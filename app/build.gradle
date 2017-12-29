@@ -2,20 +2,47 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    defaultConfig {
-        applicationId "com.architect"
-        minSdkVersion 23
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "THROW_SUBSCRIBEREXCEPTION", "true"
+        }
+        debug{
+            buildConfigField "boolean", "THROW_SUBSCRIBEREXCEPTION", "true"
         }
     }
+
+    defaultConfig {
+        applicationId "com.architect"
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [eventBusIndex : 'com.architect.MyEventBusIndex']
+            }
+        }
+    }
+    compileOptions {
+        encoding "UTF-8"
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+//    productFlavors {
+//        debug{
+//            buildConfigField "boolean", "THROW_SUBSCRIBEREXCEPTION", "true"
+//        }
+//        release{
+//            buildConfigField "boolean", "THROW_SUBSCRIBEREXCEPTION", "false"
+//        }
+//
+//    }
 }
 
 dependencies {
@@ -26,4 +53,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    compile project(':corelib')
+    implementation 'org.greenrobot:eventbus:3.0.0'
+    annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'
+
 }
+
+//apply from: './deploy/implement.gradle'
+

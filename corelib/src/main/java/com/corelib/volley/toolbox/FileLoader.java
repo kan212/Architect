@@ -5,8 +5,10 @@ import android.os.Looper;
 
 import com.corelib.volley.Request;
 import com.corelib.volley.RequestQueue;
+import com.corelib.volley.Response;
 import com.corelib.volley.VolleyError;
 import com.corelib.volley.VolleyLog;
+import com.corelib.volley.toolbox.VolleyConfig.CacheType;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,7 +21,7 @@ import java.util.Map.Entry;
  *
  */
 public class FileLoader {
-    private final String IMAGE_NEWS_ID = "newsid";
+    private final String IMAGE_NEWS_ID = "id";
     private final String IMAGE_FROM = "from";
 
     /** 请求队列 */
@@ -330,7 +332,7 @@ public class FileLoader {
             }
         }
 
-        FileRequest newRequest = new FileRequest(requestUrl, new Listener<String>() {
+        FileRequest newRequest = new FileRequest(requestUrl, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -345,7 +347,7 @@ public class FileLoader {
                 }
 
             }
-        }, new ErrorListener() {
+        }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -402,7 +404,7 @@ public class FileLoader {
             }
         }
 
-        FileRequest newRequest = new FileRequest(requestUrl, new Listener<String>() {
+        FileRequest newRequest = new FileRequest(requestUrl, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -417,7 +419,7 @@ public class FileLoader {
                 }
 
             }
-        }, new ErrorListener() {
+        }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {

@@ -1,4 +1,4 @@
-package com.architect;
+package com.architect.ui;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,6 +6,15 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.architect.R;
+import com.architect.base.api.ApiManager;
+import com.architect.base.api.TestApi;
+import com.architect.base.api.TestBean;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         }
+
     };
 
     @Override
@@ -39,6 +49,21 @@ public class MainActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        EventBus.getDefault().register(this);
+
+        TestApi api = new TestApi(TestBean.class,"http://rapid.sports.sina.com.cn/live/api/live/room?match_id=171711");
+        ApiManager.getInstance().doApi(api);
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMainThread (TestApi api){
+        if (api.getHttpCode() == 0){
+
+        }
     }
 
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 }

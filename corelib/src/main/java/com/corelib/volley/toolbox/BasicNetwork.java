@@ -17,8 +17,8 @@
 package com.corelib.volley.toolbox;
 
 import android.os.SystemClock;
-import android.text.format.DateUtils;
 
+import com.corelib.base.net.DateUtils;
 import com.corelib.volley.AuthFailureError;
 import com.corelib.volley.Cache;
 import com.corelib.volley.Network;

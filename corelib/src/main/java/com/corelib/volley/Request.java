@@ -23,7 +23,7 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.text.TextUtils;
 
-import com.android.volley.VolleyLog.MarkerLog;
+import com.corelib.volley.VolleyLog.MarkerLog;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -131,7 +131,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      * is provided by subclasses, who have a better idea of how to deliver an
      * already-parsed response.
      *
-     * @deprecated Use {@link #Request(int, String, com.android.volley.Response.ErrorListener)}.
+     * @deprecated Use {@link #Request(int, String, com.corelib.volley.Response.ErrorListener)}.
      */
     @Deprecated
     public Request(String url, Response.ErrorListener listener) {

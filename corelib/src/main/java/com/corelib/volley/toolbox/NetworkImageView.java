@@ -15,6 +15,7 @@
  */
 package com.corelib.volley.toolbox;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
@@ -35,6 +36,7 @@ import com.corelib.volley.toolbox.ImageLoader.*;
  * Handles fetching an image from a URL as well as the life-cycle of the
  * associated request.
  */
+@SuppressLint("AppCompatCustomView")
 public class NetworkImageView extends ImageView {
     /** The URL of the network image to load */
     private String mUrl;

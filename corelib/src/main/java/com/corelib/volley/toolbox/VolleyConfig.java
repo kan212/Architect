@@ -16,9 +16,9 @@ public final class VolleyConfig {
     }
 
     private static final String DEFAULT_IMAGE_PATH = Environment.getExternalStorageDirectory()
-            .getAbsolutePath() + "/Android/data/com.sina.news/cache";
+            .getAbsolutePath() + "/Android/data/com.architect/cache";
     private static final String DEFAULT_UNCLEANABLE_PATH = Environment.getExternalStorageDirectory()
-            .getAbsolutePath() + "/Android/data/com.sina.news/uncleanable";
+            .getAbsolutePath() + "/Android/data/com.architect/uncleanable";
 
     private static String mLocalImageDirectoryPath = null;
     private static String mLocalUncleanableDirectoryPath = null;

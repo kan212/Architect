@@ -28,6 +28,9 @@ import com.corelib.volley.Request;
 import com.corelib.volley.Response;
 import com.corelib.volley.VolleyError;
 import com.corelib.volley.VolleyLog;
+import com.corelib.volley.toolbox.VolleyConfig.*;
+import com.corelib.volley.toolbox.ImageLoader.*;
+import com.corelib.volley.toolbox.FileLoader.*;
 
 import java.io.File;
 
@@ -81,7 +84,7 @@ public class ImageRequest extends Request<Bitmap> {
      * @param cacheType cache type
      */
     public ImageRequest(String url, Response.Listener<Bitmap> listener, int maxWidth,
-                        int maxHeight, Config decodeConfig, Response.ErrorListener errorListener, CacheType cacheType) {
+                        int maxHeight, Config decodeConfig, Response.ErrorListener errorListener, VolleyConfig.CacheType cacheType) {
         super(Method.GET, url, errorListener);
         setRetryPolicy(new DefaultRetryPolicy(IMAGE_TIMEOUT_MS, IMAGE_MAX_RETRIES,
                 IMAGE_BACKOFF_MULT));

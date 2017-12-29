@@ -14,35 +14,24 @@
  * limitations under the License.
  */
 
-package com.corelib.volley.toolbox;
+package com.corelib.base.net;
 
 import android.text.TextUtils;
 
-import com.corelib.volley.Cache;
-import com.corelib.volley.NetworkResponse;
-
-import org.apache.http.impl.cookie.DateParseException;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.impl.cookie.DateUtils;
-
-
 import java.util.Map;
+
+import okhttp3.Response;
+
 
 /**
  * Utility methods for parsing HTTP headers.
  */
 public class HttpHeaderParser {
 
-    /**
-     * Extracts a {@link Cache.Entry} from a {@link NetworkResponse}.
-     *
-     * @param response The network response to parse headers from
-     * @return a cache entry for the given response, or null if the response is not cacheable.
-     */
-    public static Cache.Entry parseCacheHeaders(NetworkResponse response) {
+    public static CacheEntry parseCacheHeaders(Response response) {
         long now = System.currentTimeMillis();
 
-        Map<String, String> headers = response.headers;
+//        Map<String, String> headers = response.header();
 
         long serverDate = 0;
         long serverExpires = 0;
@@ -53,12 +42,12 @@ public class HttpHeaderParser {
         String serverEtag = null;
         String headerValue;
 
-        headerValue = headers.get("Date");
+        headerValue = response.header("Date");
         if (headerValue != null) {
             serverDate = parseDateAsEpoch(headerValue);
         }
 
-        headerValue = headers.get("Cache-Control");
+        headerValue = response.header("Cache-Control");
         if (headerValue != null) {
             hasCacheControl = true;
             String[] tokens = headerValue.split(",");
@@ -78,12 +67,12 @@ public class HttpHeaderParser {
             }
         }
 
-        headerValue = headers.get("Expires");
+        headerValue = response.header("Expires");
         if (headerValue != null) {
             serverExpires = parseDateAsEpoch(headerValue);
         }
 
-        serverEtag = headers.get("ETag");
+        serverEtag = response.header("ETag");
 
         // Cache-Control takes precedence over an Expires header, even if both exist and Expires
         // is more restrictive.
@@ -94,14 +83,15 @@ public class HttpHeaderParser {
             softExpire = now + (serverExpires - serverDate);
         }
 
-        Cache.Entry entry = new Cache.Entry();
-        entry.data = response.data;
-        entry.etag = serverEtag;
+        CacheEntry entry = new CacheEntry();
+//        entry.data = response.body().bytes();
+        entry.eTag = serverEtag;
         entry.softTtl = softExpire;
         entry.ttl = entry.softTtl;
         entry.serverDate = serverDate;
-        entry.responseHeaders = headers;
-
+        if(entry.eTag == null){
+            entry.eTag = "";
+        }
         return entry;
     }
 
